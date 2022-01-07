@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
-import { run } from '@ember/runloop';
+import { schedule } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
 import { sendEvent } from '@ember/object/events';
 import Ember from 'ember';
@@ -172,7 +172,7 @@ export function initialize(/* application */) {
      * @returns {void}
      */
     _scheduleParachuteChangeEvent(routeName, controller, changed = {}) {
-      run.schedule('afterRender', this, () => {
+      schedule('afterRender', this, () => {
         let event = new ParachuteEvent(routeName, controller, changed);
 
         controller.queryParamsDidChange?.(event);
