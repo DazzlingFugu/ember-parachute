@@ -1,5 +1,4 @@
 import Mixin from '@ember/object/mixin';
-import { assign } from '@ember/polyfills';
 import { assert } from '@ember/debug';
 import { isPresent, isEmpty } from '@ember/utils';
 import { setProperties, computed, set, get } from '@ember/object';
@@ -23,7 +22,7 @@ export default class QueryParams {
    * @returns {QueryParams}
    */
   constructor() {
-    let queryParams = assign({}, ...arguments);
+    let queryParams = Object.assign({}, ...arguments);
 
     // Cleanup the queryParams object. Some keys can be passed
     // as undefined via extend to nullify a QP

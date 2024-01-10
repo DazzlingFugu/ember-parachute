@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import { schedule } from '@ember/runloop';
-import { assign } from '@ember/polyfills';
 import { sendEvent } from '@ember/object/events';
 import Ember from 'ember';
 import QueryParams from '../query-params';
@@ -195,7 +194,7 @@ export function initialize(/* application */) {
         let { qpMapForRoute } = QueryParams.metaFor(controller);
 
         keys(qpMapForRoute).forEach(key => {
-          qpMapForRoute[key] = assign({}, qpMapForRoute[key], qpMap[key]);
+          qpMapForRoute[key] = Object.assign({}, qpMapForRoute[key], qpMap[key]);
         });
 
         this.set('queryParams', qpMapForRoute);
@@ -220,7 +219,7 @@ export function initialize(/* application */) {
           this._scheduleParachuteChangeEvent(
             routeName,
             controller,
-            assign({}, changed, removed)
+            Object.assign({}, changed, removed)
           );
         }
 

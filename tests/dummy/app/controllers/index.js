@@ -2,8 +2,7 @@ import Controller from '@ember/controller';
 import { A } from '@ember/array';
 import { queryParam } from 'ember-parachute/decorators';
 import { timeout } from 'ember-concurrency';
-import { action } from '@ember-decorators/object';
-import { or } from '@ember-decorators/object/computed';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency-decorators';
 
 export default class IndexController extends Controller {
@@ -33,7 +32,9 @@ export default class IndexController extends Controller {
   })
   tags = ['Ember', 'Parachute'];
 
-  @or('queryParamsState.{page,search,tags}.changed') queryParamsChanged;
+  get queryParamsChanged() {
+    return this.queryParamsState.page.changed || this.queryParamsState.search.changed || this.queryParamsState.tags.changed
+  }
 
   setup({ queryParams }) {
     if (queryParams.parachuteOpen) {

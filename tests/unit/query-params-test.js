@@ -1,5 +1,4 @@
 import EmberObject from '@ember/object';
-import { assign } from '@ember/polyfills';
 import QueryParams from 'ember-parachute';
 import { module, test } from 'qunit';
 
@@ -133,7 +132,7 @@ module('Unit | QueryParams', function(hooks) {
     controller.setProperties(changes);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      assign({}, defaultValues, changes)
+      Object.assign({}, defaultValues, changes)
     );
 
     controller.resetQueryParams();
@@ -148,13 +147,13 @@ module('Unit | QueryParams', function(hooks) {
     controller.setProperties(changes);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      assign({}, defaultValues, changes)
+      Object.assign({}, defaultValues, changes)
     );
 
     controller.resetQueryParams(['search', 'page']);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      assign(defaultValues, { direction: 'desc' })
+      Object.assign(defaultValues, { direction: 'desc' })
     );
   });
 
