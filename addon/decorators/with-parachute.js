@@ -7,6 +7,6 @@ export default function withParachute(desc) {
       klass.reopen(new QueryParams().Mixin);
 
       return klass;
-    }
+    },
   };
 }

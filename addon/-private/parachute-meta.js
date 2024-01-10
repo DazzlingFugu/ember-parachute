@@ -24,9 +24,9 @@ export default class ParachuteMeta {
     }, {});
 
     this.queryParamsArray = emberArray(
-      keys(this.queryParams).map(key => {
+      keys(this.queryParams).map((key) => {
         return this.queryParams[key];
-      })
+      }),
     );
 
     this.qpMapForController = this.queryParamsArray.reduce(
@@ -34,12 +34,12 @@ export default class ParachuteMeta {
         qps[key] = { as, scope };
         return qps;
       },
-      {}
+      {},
     );
 
     // Meta info used by the decorators
     Object.defineProperty(this.qpMapForController, PARACHUTE_QPS, {
-      value: true
+      value: true,
     });
 
     this.qpMapForRoute = this.queryParamsArray.reduce(
@@ -47,7 +47,7 @@ export default class ParachuteMeta {
         qps[key] = { replace };
         return qps;
       },
-      {}
+      {},
     );
 
     this.defaultValues = this.queryParamsArray.reduce(
@@ -55,7 +55,7 @@ export default class ParachuteMeta {
         defaults[key] = defaultValue;
         return defaults;
       },
-      {}
+      {},
     );
   }
 }

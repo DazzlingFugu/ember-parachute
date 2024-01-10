@@ -19,12 +19,12 @@ function queryParamsState(queryParamsArray, controller) {
         serializedValue: qp.serializedValue(controller),
         as: qp.as,
         defaultValue: qp.defaultValue,
-        changed: JSON.stringify(value) !== JSON.stringify(qp.defaultValue)
+        changed: JSON.stringify(value) !== JSON.stringify(qp.defaultValue),
       };
       return state;
     },
     {},
-    undefined
+    undefined,
   );
 }
 
@@ -39,7 +39,7 @@ function queryParamsState(queryParamsArray, controller) {
 export default function queryParamsStateFor(controller) {
   assert(
     '[ember-parachute] Cannot construct query params state object without a controller',
-    isPresent(controller)
+    isPresent(controller),
   );
   let { queryParamsArray } = QueryParams.metaFor(controller);
   return queryParamsState(queryParamsArray, controller);

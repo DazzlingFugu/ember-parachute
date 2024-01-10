@@ -2,7 +2,7 @@ import { A } from '@ember/array';
 import { PARACHUTE_QPS } from 'ember-parachute/-private/symbols';
 import {
   addQueryParamFor,
-  getQueryParamsFor
+  getQueryParamsFor,
 } from './-private/query-params-for';
 
 function createDescriptor(desc, qpDefinition) {
@@ -30,7 +30,7 @@ function createDescriptor(desc, qpDefinition) {
       }
 
       return klass;
-    }
+    },
   };
 
   if (desc.kind === 'field') {
@@ -53,5 +53,5 @@ export default function queryParam(qpDefinition) {
   }
 
   // Handle `@queryParam()` usage
-  return desc => createDescriptor(desc, qpDefinition);
+  return (desc) => createDescriptor(desc, qpDefinition);
 }

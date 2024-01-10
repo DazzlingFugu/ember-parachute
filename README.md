@@ -1,4 +1,4 @@
-# Ember Parachute
+# ember-parachute
 
 [![Build Status](https://travis-ci.org/offirgolan/ember-parachute.svg?branch=master)](https://travis-ci.org/offirgolan/ember-parachute)
 [![npm version](https://badge.fury.io/js/ember-parachute.svg)](http://badge.fury.io/js/ember-parachute)
@@ -6,10 +6,11 @@
 
 ## <img src="https://i.imgur.com/HaN5cCc.png" alt="ember-parachute" width="30"> Philosophy
 
-`ember-parachute` is an addon that improves upon the experience of working with
-query params in Ember. Instead of defining query params in both your route and controller, with this addon you can define them in one place as a query param map/object.
+## Compatibility
 
-This map is the source of truth for your query params, and will generate a mixin that you can then add into your controller. The mixin adds very helpful properties and methods that makes working with query params a breeze!
+* Ember.js v4.8 or above
+* Ember CLI v4.8 or above
+* Node.js v18 or above
 
 One important point about this addon is that it is opinionated about _where_ the data is fetched. In a traditional query params setup, your route is responsible for fetching data in its `model` hook. With this addon, the responsibility moves into the controller. The benefit of this approach is that data fetching no longer blocks your UI from loading, and paves the way for advanced UX such as ["skeleton loading"][skeleton-loading].
 
@@ -21,14 +22,18 @@ ember install ember-parachute
 
 ## Helpful Links
 
-- ### [Live Demo][demo]
-- ### [Changelog][changelog]
+## Usage
 
 ## Looking for help?
 
 If it is a bug [please open an issue on GitHub](http://github.com/offirgolan/ember-parachute/issues).
 
-## Usage
+## Contributing
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+## License
 
 The source of truth for your application's query params are query param maps. First, define one in your controller:
 

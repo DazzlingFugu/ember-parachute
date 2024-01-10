@@ -1,1 +1,4 @@
-export { default, initialize } from 'ember-parachute/initializers/ember-parachute';
+export {
+  default,
+  initialize,
+} from 'ember-parachute/initializers/ember-parachute';

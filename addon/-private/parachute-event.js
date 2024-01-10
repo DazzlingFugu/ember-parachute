@@ -45,7 +45,7 @@ export default class ParachuteEvent {
         return changedParams;
       },
       {},
-      undefined
+      undefined,
     );
 
     /**
@@ -57,7 +57,7 @@ export default class ParachuteEvent {
      * Whether or not a model refresh should occur
      */
     this.shouldRefresh = emberArray(keys(this.changed)).any(
-      key => queryParams[key].refresh
+      (key) => queryParams[key].refresh,
     );
 
     /**

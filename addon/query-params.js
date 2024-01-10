@@ -1,5 +1,4 @@
 import Mixin from '@ember/object/mixin';
-import { assign } from '@ember/polyfills';
 import { assert } from '@ember/debug';
 import { isPresent, isEmpty } from '@ember/utils';
 import { setProperties, computed, set, get } from '@ember/object';
@@ -23,7 +22,7 @@ export default class QueryParams {
    * @returns {QueryParams}
    */
   constructor() {
-    let queryParams = assign({}, ...arguments);
+    let queryParams = Object.assign({}, ...arguments);
 
     // Cleanup the queryParams object. Some keys can be passed
     // as undefined via extend to nullify a QP
@@ -61,7 +60,7 @@ export default class QueryParams {
   static metaFor(controller) {
     assert(
       `[ember-parachute] The controller '${controller}' is not set up with ember-parachute.`,
-      this.hasParachute(controller)
+      this.hasParachute(controller),
     );
     return get(controller, PARACHUTE_META);
   }
@@ -115,7 +114,7 @@ export default class QueryParams {
         return qps;
       },
       {},
-      undefined
+      undefined,
     );
   }
 
@@ -151,7 +150,7 @@ export default class QueryParams {
         return defaults;
       },
       {},
-      undefined
+      undefined,
     );
 
     setProperties(controller, defaults);
@@ -172,7 +171,7 @@ export default class QueryParams {
     let { queryParams } = this.metaFor(controller);
     assert(
       `[ember-parachute] The query parameter '${param}' does not exist.`,
-      queryParams[param]
+      queryParams[param],
     );
     set(queryParams[param], 'defaultValue', defaultValue);
   }
@@ -196,11 +195,8 @@ export default class QueryParams {
    * @returns {Ember.Mixin}
    */
   _generateMixin() {
-    let {
-      queryParams,
-      defaultValues,
-      qpMapForController
-    } = this._generateMeta();
+    let { queryParams, defaultValues, qpMapForController } =
+      this._generateMeta();
 
     let ControllerMixin = Mixin.create(defaultValues, {
       /**
@@ -231,7 +227,7 @@ export default class QueryParams {
        * @public
        * @property {Ember.ComputedProperty}
        */
-      allQueryParams: computed(...keys(queryParams), function() {
+      allQueryParams: computed(...keys(queryParams), function () {
         return QueryParams.queryParamsFor(this);
       }).readOnly(),
 
@@ -244,9 +240,9 @@ export default class QueryParams {
       queryParamsState: computed(
         ...keys(queryParams),
         `${PARACHUTE_META}.queryParamsArray.@each.defaultValue`,
-        function() {
+        function () {
           return QueryParams.stateFor(this);
-        }
+        },
       ).readOnly(),
 
       /**
@@ -270,7 +266,7 @@ export default class QueryParams {
        */
       setDefaultQueryParamValue(key, defaultValue) {
         QueryParams.setDefaultValue(this, key, defaultValue);
-      }
+      },
     });
 
     return ControllerMixin;

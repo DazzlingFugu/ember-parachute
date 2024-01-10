@@ -1,7 +1,7 @@
 $primary: 'red';
 $accent: 'red';
 
-@import 'ember-paper';
+// @import 'ember-paper';
 @import './sky';
 
 html,
@@ -24,7 +24,7 @@ body {
 }
 
 .text-primary {
-  color: paper-color($primary, '500');
+  //color: paper-color($primary, '500');
 }
 
 .box-container {
@@ -65,7 +65,7 @@ body {
       margin: 0;
       font-weight: 400;
       font-size: 34px;
-      color: paper-color($color-grey, '800');
+      //color: paper-color($color-grey, '800');
     }
 
     .box-content {
@@ -120,12 +120,12 @@ body {
   position: absolute;
   bottom: 100px;
   right: 20px;
-  background-color: paper-color($color-blue-grey, '500') !important;
+  //background-color: paper-color($color-blue-grey, '500') !important;
   color: white;
 }
 
 .help-dialog-header {
-  background-color: paper-color($color-blue-grey, '500');
+  //background-color: paper-color($color-blue-grey, '500');
 }
 
 @keyframes rotating {

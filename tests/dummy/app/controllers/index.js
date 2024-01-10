@@ -2,8 +2,7 @@ import Controller from '@ember/controller';
 import { A } from '@ember/array';
 import { queryParam } from 'ember-parachute/decorators';
 import { timeout } from 'ember-concurrency';
-import { action } from '@ember-decorators/object';
-import { or } from '@ember-decorators/object/computed';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency-decorators';
 
 export default class IndexController extends Controller {
@@ -14,7 +13,7 @@ export default class IndexController extends Controller {
     },
     deserialize(value) {
       return value === 'open' ? true : false;
-    }
+    },
   })
   parachuteOpen = true;
 
@@ -29,15 +28,21 @@ export default class IndexController extends Controller {
     },
     deserialize(value = '') {
       return value.split(',');
-    }
+    },
   })
   tags = ['Ember', 'Parachute'];
 
-  @or('queryParamsState.{page,search,tags}.changed') queryParamsChanged;
+  get queryParamsChanged() {
+    return (
+      this.queryParamsState.page.changed ||
+      this.queryParamsState.search.changed ||
+      this.queryParamsState.tags.changed
+    );
+  }
 
   setup({ queryParams }) {
     if (queryParams.parachuteOpen) {
-      this.get('fetchModel').perform();
+      this.fetchModel.perform();
     }
   }
 
@@ -49,7 +54,7 @@ export default class IndexController extends Controller {
 
   queryParamsDidChange({ shouldRefresh, queryParams }) {
     if (shouldRefresh && queryParams.parachuteOpen) {
-      this.get('fetchModel').perform();
+      this.fetchModel.perform();
     }
   }
 
@@ -75,8 +80,8 @@ export default class IndexController extends Controller {
 
   @action
   setDefaults() {
-    ['search', 'page', 'tags'].forEach(key => {
-      let value = key === 'tags' ? this.get(key).concat() : this.get(key);
+    ['search', 'page', 'tags'].forEach((key) => {
+      let value = key === 'tags' ? this[key].concat() : this[key];
       this.setDefaultQueryParamValue(key, value);
     });
   }
