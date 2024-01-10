@@ -1,4 +1,3 @@
-import { get } from '@ember/object';
 import { getOwner } from '@ember/application';
 
 /**
@@ -10,7 +9,7 @@ import { getOwner } from '@ember/application';
  * @returns {Ember.Controller}
  */
 export default function lookupController(route, ownerLookupFn = getOwner) {
-  let controller = get(route, 'controller');
+  let controller = route.controller;
 
   if (!controller) {
     /**
@@ -19,10 +18,9 @@ export default function lookupController(route, ownerLookupFn = getOwner) {
      * (especially with authentication) due to the controller being created
      * prematurely.
      */
-    let controllerName =
-      get(route, 'controllerName') || get(route, 'routeName');
+    let controllerName = route.controllerName || route.routeName;
     let factory = ownerLookupFn(route).factoryFor(
-      `controller:${controllerName}`
+      `controller:${controllerName}`,
     );
     return factory.class.proto();
   }

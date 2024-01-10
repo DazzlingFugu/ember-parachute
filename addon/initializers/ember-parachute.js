@@ -88,7 +88,7 @@ export function initialize(/* application */) {
         // Check if routeInfos have already been loaded.
         // If so, don't return a promise as it will result in
         // the loading screen/state flashing.
-        if (routeInfos.every(x => x.isResolved)) {
+        if (routeInfos.every((x) => x.isResolved)) {
           return this._super(params, transition);
         }
 
@@ -97,20 +97,20 @@ export function initialize(/* application */) {
         // https://github.com/emberjs/ember.js/issues/15291
         const _super = this._super.bind(this);
 
-        return RSVP.all(routeInfos.map(x => x.routePromise)).then(() =>
-          _super(params, transition)
+        return RSVP.all(routeInfos.map((x) => x.routePromise)).then(() =>
+          _super(params, transition),
         );
       } else {
         const { handlerInfos } = transition;
 
-        if (!handlerInfos.find(x => !x.handler)) {
+        if (!handlerInfos.find((x) => !x.handler)) {
           return this._super(params, transition);
         }
 
         const _super = this._super.bind(this);
 
-        return RSVP.all(handlerInfos.map(x => x.handlerPromise)).then(() =>
-          _super(params, transition)
+        return RSVP.all(handlerInfos.map((x) => x.handlerPromise)).then(() =>
+          _super(params, transition),
         );
       }
     },
@@ -190,11 +190,15 @@ export function initialize(/* application */) {
      */
     _setupParachuteQueryParamsMap(controller) {
       if (!this.__hasSetupParachuteQPs) {
-        let qpMap = this.get('queryParams');
+        let qpMap = this.queryParams;
         let { qpMapForRoute } = QueryParams.metaFor(controller);
 
-        keys(qpMapForRoute).forEach(key => {
-          qpMapForRoute[key] = Object.assign({}, qpMapForRoute[key], qpMap[key]);
+        keys(qpMapForRoute).forEach((key) => {
+          qpMapForRoute[key] = Object.assign(
+            {},
+            qpMapForRoute[key],
+            qpMap[key],
+          );
         });
 
         this.set('queryParams', qpMapForRoute);
@@ -219,13 +223,13 @@ export function initialize(/* application */) {
           this._scheduleParachuteChangeEvent(
             routeName,
             controller,
-            Object.assign({}, changed, removed)
+            Object.assign({}, changed, removed),
           );
         }
 
         return this._super(...arguments);
-      }
-    }
+      },
+    },
   });
 
   Route.reopenClass({ _didInitializeParachute: true });
@@ -233,5 +237,5 @@ export function initialize(/* application */) {
 
 export default {
   name: 'ember-parachute',
-  initialize
+  initialize,
 };

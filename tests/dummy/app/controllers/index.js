@@ -13,7 +13,7 @@ export default class IndexController extends Controller {
     },
     deserialize(value) {
       return value === 'open' ? true : false;
-    }
+    },
   })
   parachuteOpen = true;
 
@@ -28,17 +28,21 @@ export default class IndexController extends Controller {
     },
     deserialize(value = '') {
       return value.split(',');
-    }
+    },
   })
   tags = ['Ember', 'Parachute'];
 
   get queryParamsChanged() {
-    return this.queryParamsState.page.changed || this.queryParamsState.search.changed || this.queryParamsState.tags.changed
+    return (
+      this.queryParamsState.page.changed ||
+      this.queryParamsState.search.changed ||
+      this.queryParamsState.tags.changed
+    );
   }
 
   setup({ queryParams }) {
     if (queryParams.parachuteOpen) {
-      this.get('fetchModel').perform();
+      this.fetchModel.perform();
     }
   }
 
@@ -50,7 +54,7 @@ export default class IndexController extends Controller {
 
   queryParamsDidChange({ shouldRefresh, queryParams }) {
     if (shouldRefresh && queryParams.parachuteOpen) {
-      this.get('fetchModel').perform();
+      this.fetchModel.perform();
     }
   }
 
@@ -76,8 +80,8 @@ export default class IndexController extends Controller {
 
   @action
   setDefaults() {
-    ['search', 'page', 'tags'].forEach(key => {
-      let value = key === 'tags' ? this.get(key).concat() : this.get(key);
+    ['search', 'page', 'tags'].forEach((key) => {
+      let value = key === 'tags' ? this[key].concat() : this[key];
       this.setDefaultQueryParamValue(key, value);
     });
   }

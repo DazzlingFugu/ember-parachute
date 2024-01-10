@@ -15,7 +15,7 @@ export default class QueryParam {
   constructor(key, options = {}) {
     assert(
       `[ember-parachute] You must specify a key to the QueryParam Class`,
-      isPresent(key)
+      isPresent(key),
     );
 
     this.key = key;

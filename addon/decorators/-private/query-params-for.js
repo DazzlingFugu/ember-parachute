@@ -11,6 +11,6 @@ export function getQueryParamsFor(klass) {
 export function addQueryParamFor(klass, key, definition) {
   QP_MAP.set(
     klass,
-    getQueryParamsFor(klass).extend({ [key]: definition || {} })
+    getQueryParamsFor(klass).extend({ [key]: definition || {} }),
   );
 }

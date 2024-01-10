@@ -11,33 +11,33 @@ const queryParams = new QueryParams({
   direction: {
     as: 'dir',
     defaultValue: 'asc',
-    refresh: true
+    refresh: true,
   },
   page: {
     defaultValue: 1,
     refresh: true,
-    replace: true
+    replace: true,
   },
   search: {
     defaultValue: '',
-    refresh: true
-  }
+    refresh: true,
+  },
 });
 
 const QPController = Controller.extend(queryParams.Mixin);
 let route;
 
-module('Unit | Route', function(hooks) {
+module('Unit | Route', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     run(() => {
       this.owner.register('route:foo', Route.extend());
       route = this.owner.lookup('route:foo');
     });
   });
 
-  test('#setup', function(assert) {
+  test('#setup', function (assert) {
     assert.expect(2);
 
     let controller = QPController.extend({
@@ -45,15 +45,15 @@ module('Unit | Route', function(hooks) {
         assert.ok(event instanceof ParachuteEvent);
       },
 
-      onSetup: on('setup', function(event) {
+      onSetup: on('setup', function (event) {
         assert.ok(event instanceof ParachuteEvent);
-      })
+      }),
     }).create();
 
     route.setupController(controller);
   });
 
-  test('#reset', function(assert) {
+  test('#reset', function (assert) {
     assert.expect(4);
 
     let controller = QPController.extend({
@@ -62,16 +62,16 @@ module('Unit | Route', function(hooks) {
         assert.equal(typeof isExiting, 'boolean');
       },
 
-      onReset: on('reset', function(event, isExiting) {
+      onReset: on('reset', function (event, isExiting) {
         assert.ok(event instanceof ParachuteEvent);
         assert.equal(typeof isExiting, 'boolean');
-      })
+      }),
     }).create();
 
     route.resetController(controller, true);
   });
 
-  test('#queryParamsDidChange', function(assert) {
+  test('#queryParamsDidChange', function (assert) {
     assert.expect(2);
 
     let controller = QPController.extend({
@@ -79,14 +79,14 @@ module('Unit | Route', function(hooks) {
         assert.ok(event instanceof ParachuteEvent);
       },
 
-      onReset: on('queryParamsDidChange', function(event) {
+      onReset: on('queryParamsDidChange', function (event) {
         assert.ok(event instanceof ParachuteEvent);
-      })
+      }),
     }).create();
 
     route.setProperties({
       routeName: 'foo',
-      controller
+      controller,
     });
 
     run(() => {
@@ -94,13 +94,13 @@ module('Unit | Route', function(hooks) {
     });
   });
 
-  test('route queryParams map', function(assert) {
+  test('route queryParams map', function (assert) {
     assert.expect(1);
 
     let controller = QPController.create();
 
     route.set('queryParams', {
-      search: { refreshModel: true }
+      search: { refreshModel: true },
     });
 
     route.setupController(controller);
@@ -108,7 +108,7 @@ module('Unit | Route', function(hooks) {
     assert.propEqual(route.get('queryParams'), {
       direction: { replace: false },
       page: { replace: true },
-      search: { replace: false, refreshModel: true }
+      search: { replace: false, refreshModel: true },
     });
   });
 });

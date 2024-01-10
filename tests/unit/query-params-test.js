@@ -8,15 +8,15 @@ const queryParams = new QueryParams({
   direction: {
     as: 'dir',
     defaultValue: 'asc',
-    refresh: true
+    refresh: true,
   },
   page: {
     defaultValue: 1,
-    refresh: true
+    refresh: true,
   },
   search: {
     defaultValue: '',
-    refresh: true
+    refresh: true,
   },
   colors: {
     defaultValue: [],
@@ -28,15 +28,15 @@ const queryParams = new QueryParams({
     deserialize(value = '', controller) {
       assertController(controller);
       return value.split(',');
-    }
-  }
+    },
+  },
 });
 
 const defaultValues = {
   direction: 'asc',
   page: 1,
   search: '',
-  colors: []
+  colors: [],
 };
 
 const Controller = EmberObject.extend(queryParams.Mixin);
@@ -45,17 +45,17 @@ let controller;
 function assertController(controller) {
   if (!(controller instanceof Controller)) {
     throw new Error(
-      'Expected the controller to be passed as the second parameter to serialize / deserialize.'
+      'Expected the controller to be passed as the second parameter to serialize / deserialize.',
     );
   }
 }
 
-module('Unit | QueryParams', function(hooks) {
-  hooks.beforeEach(function() {
+module('Unit | QueryParams', function (hooks) {
+  hooks.beforeEach(function () {
     controller = Controller.create();
   });
 
-  test('create', function(assert) {
+  test('create', function (assert) {
     assert.expect(2);
 
     let QP, controller, queryParams;
@@ -63,7 +63,7 @@ module('Unit | QueryParams', function(hooks) {
     QP = new QueryParams(
       { foo: { defaultValue: 1 } },
       { bar: { defaultValue: 1 } },
-      { baz: { defaultValue: 1 } }
+      { baz: { defaultValue: 1 } },
     );
     controller = EmberObject.extend(QP.Mixin).create();
     queryParams = QueryParams.metaFor(controller).queryParams;
@@ -73,7 +73,7 @@ module('Unit | QueryParams', function(hooks) {
     QP = new QueryParams(
       { foo: { defaultValue: 1 } },
       { bar: { defaultValue: 1 } },
-      { bar: { defaultValue: undefined } }
+      { bar: { defaultValue: undefined } },
     );
     controller = EmberObject.extend(QP.Mixin).create();
     queryParams = QueryParams.metaFor(controller).queryParams;
@@ -81,7 +81,7 @@ module('Unit | QueryParams', function(hooks) {
     assert.deepEqual(keys(queryParams), ['foo', 'bar']);
   });
 
-  test('extend', function(assert) {
+  test('extend', function (assert) {
     assert.expect(1);
 
     let QP = new QueryParams({ foo: { defaultValue: 1 } });
@@ -90,12 +90,12 @@ module('Unit | QueryParams', function(hooks) {
     assert.deepEqual(keys(QP.queryParams), ['foo', 'bar', 'baz']);
   });
 
-  test('QP Normalization', function(assert) {
+  test('QP Normalization', function (assert) {
     assert.expect(5);
 
     let QP = new QueryParams({
       foo: { defaultValue: 1 },
-      bar: { defaultValue: 1, as: '_bar_' }
+      bar: { defaultValue: 1, as: '_bar_' },
     });
 
     controller = EmberObject.extend(QP.Mixin).create();
@@ -109,7 +109,7 @@ module('Unit | QueryParams', function(hooks) {
     assert.equal(queryParams.bar.as, '_bar_');
   });
 
-  test('setDefaultQueryParamValue + resetQueryParams', function(assert) {
+  test('setDefaultQueryParamValue + resetQueryParams', function (assert) {
     assert.expect(4);
 
     assert.equal(controller.get('page'), 1);
@@ -124,7 +124,7 @@ module('Unit | QueryParams', function(hooks) {
     assert.equal(controller.get('page'), 2);
   });
 
-  test('resetQueryParams - all', function(assert) {
+  test('resetQueryParams - all', function (assert) {
     assert.expect(2);
 
     let changes = { page: 2, direction: 'desc' };
@@ -132,14 +132,14 @@ module('Unit | QueryParams', function(hooks) {
     controller.setProperties(changes);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      Object.assign({}, defaultValues, changes)
+      Object.assign({}, defaultValues, changes),
     );
 
     controller.resetQueryParams();
     assert.deepEqual(controller.get('allQueryParams'), defaultValues);
   });
 
-  test('resetQueryParams - individual', function(assert) {
+  test('resetQueryParams - individual', function (assert) {
     assert.expect(2);
 
     let changes = { page: 2, direction: 'desc', search: 'date' };
@@ -147,24 +147,24 @@ module('Unit | QueryParams', function(hooks) {
     controller.setProperties(changes);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      Object.assign({}, defaultValues, changes)
+      Object.assign({}, defaultValues, changes),
     );
 
     controller.resetQueryParams(['search', 'page']);
     assert.deepEqual(
       controller.get('allQueryParams'),
-      Object.assign(defaultValues, { direction: 'desc' })
+      Object.assign(defaultValues, { direction: 'desc' }),
     );
   });
 
-  test('CP - allQueryParams', function(assert) {
+  test('CP - allQueryParams', function (assert) {
     assert.expect(2);
 
     assert.deepEqual(controller.get('allQueryParams'), {
       direction: 'asc',
       page: 1,
       search: '',
-      colors: []
+      colors: [],
     });
 
     controller.set('page', 2);
@@ -173,11 +173,11 @@ module('Unit | QueryParams', function(hooks) {
       direction: 'asc',
       page: 2,
       search: '',
-      colors: []
+      colors: [],
     });
   });
 
-  test('CP - queryParamsState', function(assert) {
+  test('CP - queryParamsState', function (assert) {
     assert.expect(4);
 
     assert.deepEqual(controller.get('queryParamsState.page'), {
@@ -185,7 +185,7 @@ module('Unit | QueryParams', function(hooks) {
       defaultValue: 1,
       changed: false,
       as: 'page',
-      serializedValue: 1
+      serializedValue: 1,
     });
 
     controller.set('page', 2);
@@ -195,7 +195,7 @@ module('Unit | QueryParams', function(hooks) {
       defaultValue: 1,
       changed: true,
       as: 'page',
-      serializedValue: 2
+      serializedValue: 2,
     });
 
     controller.setDefaultQueryParamValue('page', 2);
@@ -205,7 +205,7 @@ module('Unit | QueryParams', function(hooks) {
       defaultValue: 2,
       changed: false,
       as: 'page',
-      serializedValue: 2
+      serializedValue: 2,
     });
 
     controller.set('colors', ['red', 'blue']);
@@ -215,7 +215,7 @@ module('Unit | QueryParams', function(hooks) {
       serializedValue: 'red,blue',
       defaultValue: [],
       changed: true,
-      as: 'colors'
+      as: 'colors',
     });
   });
 });

@@ -9,7 +9,7 @@ class WithParachuteController extends EmberObject {}
 class QPController extends EmberObject {
   @queryParam({
     as: 'dir',
-    refresh: true
+    refresh: true,
   })
   direction = 'asc';
 
@@ -18,37 +18,37 @@ class QPController extends EmberObject {
   @queryParam({
     refresh: true,
     serialize() {},
-    deserialize() {}
+    deserialize() {},
   })
   color = [];
 }
 
-module('Unit | Decorators', function() {
+module('Unit | Decorators', function () {
   let controller;
 
-  module('withParachute', function(hooks) {
-    hooks.beforeEach(function() {
+  module('withParachute', function (hooks) {
+    hooks.beforeEach(function () {
       controller = WithParachuteController.create();
     });
 
-    test('it works', function(assert) {
+    test('it works', function (assert) {
       assert.ok(QueryParams.metaFor(controller));
     });
   });
 
-  module('queryParam', function(hooks) {
-    hooks.beforeEach(function() {
+  module('queryParam', function (hooks) {
+    hooks.beforeEach(function () {
       controller = QPController.create();
     });
 
-    test('it works', function(assert) {
+    test('it works', function (assert) {
       const { queryParams, queryParamsArray } = QueryParams.metaFor(controller);
 
       assert.equal(queryParamsArray.length, 3);
       assert.deepEqual(Object.keys(queryParams), [
         'direction',
         'page',
-        'color'
+        'color',
       ]);
       assert.equal(queryParams.direction.as, 'dir');
       assert.equal(queryParams.page.defaultValue, 1);

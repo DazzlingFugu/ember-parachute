@@ -6,12 +6,12 @@ export default Route.extend({
   queryParams: {
     page: { refreshModel: true },
     tags: { refreshModel: true },
-    search: { refreshModel: true }
+    search: { refreshModel: true },
   },
 
   model({ parachuteOpen }) {
     if (!parachuteOpen) {
-      return new Promise(resolve => later(resolve, 1000));
+      return new Promise((resolve) => later(resolve, 1000));
     }
-  }
+  },
 });
